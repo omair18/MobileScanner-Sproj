@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="io-0.26">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.boofcv/io/0.26/6f854e25c2b60220113717c409b672911d49465f/io-0.26.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.boofcv/io/0.26/3fb4cb6125bcc2c5f21e659f8acd09fca9c9b87d/io-0.26-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

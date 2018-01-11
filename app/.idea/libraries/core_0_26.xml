@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="core-0.26">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.boofcv/core/0.26/84e1cedd6c0794225b9fc9ebdedac3bc82c0934a/core-0.26.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.boofcv/core/0.26/e8a4deda2f8b5af765ab00688672d7c94a5d0e4d/core-0.26-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
