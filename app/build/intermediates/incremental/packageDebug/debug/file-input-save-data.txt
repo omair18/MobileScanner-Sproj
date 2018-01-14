@@ -1,0 +1,19 @@
+#Internal package file, do not edit.
+#Fri Jan 12 17:21:13 PKT 2018
+1.base=/home/omair/Downloads/MobileScanner Sproj/app/build/intermediates/transforms/dexMerger/debug/1
+2.path=classes2.dex
+0.baseType=DIRECTORY
+3.baseType=DIRECTORY
+2.base=/home/omair/Downloads/MobileScanner Sproj/app/build/intermediates/transforms/dexMerger/debug/1
+3.set=ASSET
+2.set=DEX
+1.baseType=DIRECTORY
+3.path=chair.ply
+count=4
+1.set=DEX
+0.path=classes.dex
+3.base=/home/omair/Downloads/MobileScanner Sproj/app/build/intermediates/assets/debug
+0.set=DEX
+0.base=/home/omair/Downloads/MobileScanner Sproj/app/build/intermediates/transforms/dexMerger/debug/0
+2.baseType=DIRECTORY
+1.path=classes.dex

@@ -53,10 +53,34 @@ public class PlyModel extends IndexedModel {
         }
     }
     public PlyModel(@NonNull List<Float> vertices) {
+        super();
         float[] floatArray = new float[vertices.size()];
+        float x, y, z;
+        int numVertices = vertices.size()/3;
+
+        double centerMassX = 0.0;
+        double centerMassY = 0.0;
+        double centerMassZ = 0.0;
+
         for (int i = 0; i < vertices.size(); i++) {
-            floatArray[i] = vertices.get(i);
+            int temp = i;
+            floatArray[temp] = vertices.get(temp); //get x
+            x = floatArray[temp];
+            ++temp;
+            floatArray[temp] = vertices.get(temp); //get y
+            y = floatArray[temp];
+            ++temp;
+            floatArray[temp] = vertices.get(temp); //getz
+            z = floatArray[temp];
+            adjustMaxMin(x, y, z);
+            centerMassX += x;
+            centerMassY += y;
+            centerMassZ += z;
+            i = temp; //update value of i
         }
+        this.centerMassX = (float)(centerMassX / numVertices);
+        this.centerMassY = (float)(centerMassY / numVertices);
+        this.centerMassZ = (float)(centerMassZ / numVertices);
         ByteBuffer vbb = ByteBuffer.allocateDirect(floatArray.length * BYTES_PER_FLOAT);
         vbb.order(ByteOrder.nativeOrder());
         vertexBuffer = vbb.asFloatBuffer();

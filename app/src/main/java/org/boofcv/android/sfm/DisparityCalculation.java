@@ -67,6 +67,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -114,6 +115,14 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 	// has the disparity been computed
 	boolean computedDisparity = false;
 
+	public static Semaphore[] semaphores = new Semaphore[4]; // 4 threads, so 4 semaphores
+
+    private void initSemaphores() {
+		semaphores[0] = new Semaphore(1);
+		semaphores[1] = new Semaphore(0);
+		semaphores[2] = new Semaphore(0);
+		semaphores[3] = new Semaphore(0);
+	}
 
 
 	private CustomThreadPoolManager mCustomThreadPoolManager;
@@ -291,12 +300,14 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 		int x_0 = getDisparity().getWidth();
 		int y_0 = getDisparity().getHeight();
 
+		initSemaphores();
+
 /* for multi threading */
 		mCustomThreadPoolManager = CustomThreadPoolManager.getsInstance();
 		THREADS_DONE = 0; //a flag to check if threads have done their job or not
 		for (int k=0; k<4; k++) {
 			CustomRunnable runnable = new CustomRunnable();
-			CustomCallable callable = new CustomCallable();
+			CustomCallable callable = new CustomCallable(semaphores,k);
 			//setter for each thread, each thread will take some values and perform its own calculation. Once calculation is done, it writes all points in a file.ply
 			boolean flag = true;
 			int i=0,j=0;

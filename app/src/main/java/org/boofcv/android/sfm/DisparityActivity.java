@@ -1,4 +1,5 @@
 package org.boofcv.android.sfm;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -57,6 +58,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import android.widget.ImageView;
 //point cloud related imports
@@ -80,6 +82,7 @@ public class DisparityActivity extends DemoVideoDisplayActivity
 	public static String[] PLYFiles_Paths = new String [4];
 	protected static final int INPUT_BUFFER_SIZE = 0x10000;
 
+	ProgressDialog progressDialog;
 	AssociationVisualize visualize;
 	// indicate where the user touched the screen
 	volatile int touchEventType = 0;
@@ -99,8 +102,11 @@ public class DisparityActivity extends DemoVideoDisplayActivity
 	int changeDisparityAlg = -1;
 
 	public List<Float> vertices = new ArrayList<>();
+	public static List<Float> allVerticecs = new ArrayList<>();
 
 	DView activeView = DView.ASSOCIATION;
+
+	String [] TemporaryThreadFiles = {"points_0.ply", "points_1.ply", "points_2.ply", "points_3.ply"};
 
 	public DisparityActivity() {
 		visualize = new AssociationVisualize(this);
@@ -131,8 +137,9 @@ public class DisparityActivity extends DemoVideoDisplayActivity
 		spinnerAlgs.setOnItemSelectedListener(this);
 
 		ptCloudBtn = (Button)findViewById(R.id.button_ptcloud);
-		//ptCloudBtn.setVisibility(View.INVISIBLE);
 
+		//ptCloudBtn.setVisibility(View.INVISIBLE);
+		//DeleteAllFiles();
 		FrameLayout iv = getViewPreview();
 		mDetector = new GestureDetector(this, new MyGestureDetector(iv));
 		iv.setOnTouchListener(new View.OnTouchListener(){
@@ -147,6 +154,7 @@ public class DisparityActivity extends DemoVideoDisplayActivity
 	@Override
 	protected void onResume() {
 		super.onResume();
+		//DeleteAllFiles();
 		setProcessing(new DisparityProcessing());
 		visualize.setSource(null);
 		visualize.setDestination(null);
@@ -238,6 +246,32 @@ public class DisparityActivity extends DemoVideoDisplayActivity
 		}
 	}
 
+	private Boolean checkIfAllFilesExist() {
+
+		File p0 = new File(Environment.getExternalStorageDirectory() + "/" + TemporaryThreadFiles[0]);
+		File p1 = new File(Environment.getExternalStorageDirectory() + "/" + TemporaryThreadFiles[1]);
+		File p2 = new File(Environment.getExternalStorageDirectory() + "/" + TemporaryThreadFiles[2]);
+		File p3 = new File(Environment.getExternalStorageDirectory() + "/" + TemporaryThreadFiles[3]);
+
+		if(p0.isFile() && p1.isFile() && p2.isFile() && p3.isFile())
+			return true;
+		else
+			return false;
+	}
+	private void DeleteAllFiles() {
+
+		File p0 = new File(Environment.getExternalStorageDirectory() + "/" + TemporaryThreadFiles[0]);
+		File p1 = new File(Environment.getExternalStorageDirectory() + "/" + TemporaryThreadFiles[1]);
+		File p2 = new File(Environment.getExternalStorageDirectory() + "/" + TemporaryThreadFiles[2]);
+		File p3 = new File(Environment.getExternalStorageDirectory() + "/" + TemporaryThreadFiles[3]);
+
+		p0.delete();
+		p1.delete();
+		p2.delete();
+		p3.delete();
+
+	}
+
 public static void appendLog(List<Float> vertices, String fileName)
     {
         File logFile = new File(Environment.getExternalStorageDirectory() + "/" + fileName);
@@ -294,28 +328,62 @@ public static void appendLog(List<Float> vertices, String fileName)
     }
 
 	public void onClickPointCloudButton(View v) {
-		while(DisparityCalculation.THREADS_DONE < 3) {
-			Toast.makeText(DisparityActivity.this, "WAITING FOR THREADS TO FINISH THEIR TASK!", Toast.LENGTH_SHORT).show();
-		}
-		//read all plyfiles
-		for(int j=0; j < PLYFiles_Paths.length; j++) {
-			try {
-				readPLYText(vertices, PLYFiles_Paths[j]);
-			} catch (IOException e) {
-				e.printStackTrace();
+
+		/*File logFile = new File(Environment.getExternalStorageDirectory() + "/" + MainActivity.resultFile);
+        boolean deleted = logFile.delete(); */
+		progressDialog = new ProgressDialog(DisparityActivity.this);
+		progressDialog.setMessage("Loading..."); // Setting Message
+		progressDialog.setTitle("Computing PointCloud"); // Setting Title
+		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+		progressDialog.show(); // Display Progress Dialog
+		progressDialog.setCancelable(true);
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					while(DisparityCalculation.THREADS_DONE < 3) {
+						Toast.makeText(DisparityActivity.this, "WAITING FOR THREADS TO FINISH THEIR TASK!", Toast.LENGTH_SHORT).show();
+						/*try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						} */
+					}
+					/*while(checkIfAllFilesExist() != true) { //check if all files have been written to the disk
+						Thread.sleep(500);
+					} */
+					//read all plyfiles
+					/*for(int j=0; j < PLYFiles_Paths.length; j++) {
+						try {
+							readPLYText(vertices, PLYFiles_Paths[j]);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					} */
+					/*for(int k=0; k<vertices.size(); k++) {
+						MainActivity.vertices.add(vertices.get(k));
+					} */
+					appendLog(allVerticecs,MainActivity.resultFile); //write vertices into the resultfile
+
+					//Log.v("VERTICES", "Length of vertices = "+ vertices.size()+ " " + MainActivity.vertices.size());
+					Log.v("F_VERTICES", "Length of final vertices = "+ allVerticecs.size()/3);
+
+					Intent i = new Intent(DisparityActivity.this, org.boofcv.android.dmitrybrant.modelviewer.MainActivity.class); //start pointcloud activity
+					startActivity(i); //start acvitity
+					//Thread.sleep(10000);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				progressDialog.dismiss();
+
 			}
-		}
-//		for(int k=0; k<vertices.size(); k++) {
-//			MainActivity.vertices.add(vertices.get(k));
-//		}
-		appendLog(vertices,MainActivity.resultFile);
-		Log.v("VERTICES", "Length of vertices = "+ vertices.size()+ " " + MainActivity.vertices.size());
-		Intent i = new Intent(this, org.boofcv.android.dmitrybrant.modelviewer.MainActivity.class); //start pointcloud activity
-		startActivity(i); //start acvitity
+		}).start();
 	}
 
 	public void resetPressed( View view ) {
         reset = true;
+        File logFile = new File(Environment.getExternalStorageDirectory() + "/" + MainActivity.resultFile);
+        boolean deleted = logFile.delete();
+
         try {
             java.io.File xmlFile = new java.io.File(Environment
                     .getDataDirectory()

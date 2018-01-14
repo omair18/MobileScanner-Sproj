@@ -1,0 +1,422 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:5-158:12
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:5-158:12
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:5-158:12
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:5-158:12
+MERGED from [com.android.support:appcompat-v7:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.1.0.aar/863009f38247be5b5a454af2ac55c059/AndroidManifest.xml:17:1-27:12
+MERGED from [com.google.android.gms:play-services-appindexing:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-appindexing-8.4.0.aar/f8e0e81b33949f7e086c3d4d7a0a683b/AndroidManifest.xml:16:1-20:12
+MERGED from [com.google.android.gms:play-services-base:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-base-8.4.0.aar/498637025654e39cfa92e2cbe9a74822/AndroidManifest.xml:16:1-19:12
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-basement-8.4.0.aar/f6981cfbcd3a2b559b0a0c156b1f82a5/AndroidManifest.xml:16:1-26:12
+MERGED from [com.android.support:support-v4:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-v4-25.1.0.aar/ee47b9b270fb36e620b9e6364688b948/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:multidex:1.0.2] /home/omair/.gradle/caches/transforms-1/files-1.1/multidex-1.0.2.aar/b3d1f54eab96501b0c24a4eb27fda46d/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-25.1.0.aar/eb9fc89f2b881d8ef3b5c462548ae55f/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:support-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-25.1.0.aar/aace865b84f2f1115e7b47574a903001/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:support-fragment:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-fragment-25.1.0.aar/39cfb0b8dc7eaea052041bbf3f36f9d5/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-media-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.1.0.aar/598aea7abef0e61315c4c525fcc2f144/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-utils:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.1.0.aar/4edeef2a8827c403f8a46c6b249f198d/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-ui:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.1.0.aar/a1a461cb624e2625bd122bea88727a5f/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-compat-25.1.0.aar/47fb06bcdae2ed77bbe1919c853116f2/AndroidManifest.xml:17:1-27:12
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:5-158:12
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:5-158:12
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:5-158:12
+	package
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:3:5-33
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:5-158:12
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:5-158:12
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:2:15-73
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:4:5-80
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:4:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:5:5-79
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:5:22-77
+uses-permission#android.permission.CAMERA
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:6:5-65
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:6:22-62
+uses-permission#android.permission.WAKE_LOCK
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:7:5-67
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:7:22-65
+uses-feature#android.hardware.camera
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:8:5-10:36
+	android:required
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:10:9-33
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:9:9-47
+uses-feature#android.hardware.camera.autofocus
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:11:5-13:36
+	android:required
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:13:9-33
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:12:9-57
+supports-screens
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:14:5-19:40
+	android:largeScreens
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:16:9-36
+	android:smallScreens
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:18:9-36
+	android:normalScreens
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:17:9-37
+	android:xlargeScreens
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:19:9-37
+	android:anyDensity
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:15:9-34
+application
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:20:5-156:19
+MERGED from [com.android.support:appcompat-v7:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.1.0.aar/863009f38247be5b5a454af2ac55c059/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.1.0.aar/863009f38247be5b5a454af2ac55c059/AndroidManifest.xml:25:5-20
+MERGED from [com.google.android.gms:play-services-appindexing:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-appindexing-8.4.0.aar/f8e0e81b33949f7e086c3d4d7a0a683b/AndroidManifest.xml:19:5-20
+MERGED from [com.google.android.gms:play-services-appindexing:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-appindexing-8.4.0.aar/f8e0e81b33949f7e086c3d4d7a0a683b/AndroidManifest.xml:19:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-basement-8.4.0.aar/f6981cfbcd3a2b559b0a0c156b1f82a5/AndroidManifest.xml:20:5-24:19
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-basement-8.4.0.aar/f6981cfbcd3a2b559b0a0c156b1f82a5/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-v4-25.1.0.aar/ee47b9b270fb36e620b9e6364688b948/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-v4-25.1.0.aar/ee47b9b270fb36e620b9e6364688b948/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-25.1.0.aar/eb9fc89f2b881d8ef3b5c462548ae55f/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-25.1.0.aar/eb9fc89f2b881d8ef3b5c462548ae55f/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-25.1.0.aar/aace865b84f2f1115e7b47574a903001/AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-25.1.0.aar/aace865b84f2f1115e7b47574a903001/AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-fragment:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-fragment-25.1.0.aar/39cfb0b8dc7eaea052041bbf3f36f9d5/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-fragment-25.1.0.aar/39cfb0b8dc7eaea052041bbf3f36f9d5/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.1.0.aar/598aea7abef0e61315c4c525fcc2f144/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.1.0.aar/598aea7abef0e61315c4c525fcc2f144/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.1.0.aar/4edeef2a8827c403f8a46c6b249f198d/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.1.0.aar/4edeef2a8827c403f8a46c6b249f198d/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.1.0.aar/a1a461cb624e2625bd122bea88727a5f/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.1.0.aar/a1a461cb624e2625bd122bea88727a5f/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-compat-25.1.0.aar/47fb06bcdae2ed77bbe1919c853116f2/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-compat-25.1.0.aar/47fb06bcdae2ed77bbe1919c853116f2/AndroidManifest.xml:25:5-20
+	android:label
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:24:9-41
+	android:icon
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:23:9-45
+	android:allowBackup
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:21:9-35
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:25:9-71
+activity#org.boofcv.android.DemoMain
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:27:9-35:20
+	android:label
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:29:13-45
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:28:13-37
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:30:13-34:29
+action#android.intent.action.MAIN
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:31:17-69
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:31:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:33:17-77
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:33:27-74
+activity#org.boofcv.android.dmitrybrant.modelviewer.MainActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:36:9-39:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:39:13-50
+	android:theme
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:38:13-57
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:37:13-83
+activity#org.boofcv.android.DemoVideoDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:40:9-42:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:42:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:41:13-53
+activity#org.boofcv.android.PreferenceActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:43:9-56
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:43:19-53
+activity#org.boofcv.android.ip.BlurDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:44:9-46:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:46:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:45:13-51
+activity#org.boofcv.android.ip.EnhanceDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:47:9-49:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:49:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:48:13-54
+activity#org.boofcv.android.ip.GradientDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:50:9-52:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:52:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:51:13-55
+activity#org.boofcv.android.ip.BinaryDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:53:9-55:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:55:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:54:13-53
+activity#org.boofcv.android.detect.PointDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:56:9-58:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:58:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:57:13-56
+activity#org.boofcv.android.detect.ScalePointDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:59:9-61:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:61:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:60:13-61
+activity#org.boofcv.android.detect.LineDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:62:9-64:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:64:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:63:13-55
+activity#org.boofcv.android.tracker.KltDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:65:9-67:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:67:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:66:13-55
+activity#org.boofcv.android.sfm.StabilizeDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:68:9-70:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:70:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:69:13-57
+activity#org.boofcv.android.sfm.MosaicDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:71:9-73:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:73:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:72:13-54
+activity#org.boofcv.android.assoc.AssociationActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:74:9-76:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:76:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:75:13-54
+activity#org.boofcv.android.tracker.DdaTrackerDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:77:9-79:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:79:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:78:13-62
+activity#org.boofcv.android.tracker.CombinedTrackerDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:80:9-82:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:82:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:81:13-67
+activity#org.boofcv.android.calib.CalibrationActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:83:9-85:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:85:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:84:13-54
+activity#org.boofcv.android.calib.CalibrationComputeActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:86:9-88:77
+	android:configChanges
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:88:13-74
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:87:13-61
+activity#org.boofcv.android.CameraInformationActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:89:9-63
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:89:19-60
+activity#org.boofcv.android.sfm.DisparityActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:90:9-92:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:92:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:91:13-50
+activity#org.boofcv.android.AboutActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:93:9-51
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:93:19-48
+activity#org.boofcv.android.calib.CalibrationHelpActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:94:9-67
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:94:19-64
+activity#org.boofcv.android.detect.ShapeFitDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:95:9-97:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:97:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:96:13-59
+activity#org.boofcv.android.ip.ImageTransformActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:98:9-100:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:100:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:99:13-54
+activity#org.boofcv.android.tracker.ObjectTrackerActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:101:9-103:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:103:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:102:13-58
+activity#org.boofcv.android.detect.ContourShapeFittingActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:104:9-106:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:106:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:105:13-63
+activity#org.boofcv.android.detect.CannyEdgeActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:107:9-109:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:109:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:108:13-53
+activity#org.boofcv.android.calib.UndistortDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:110:9-112:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:112:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:111:13-59
+activity#org.boofcv.android.detect.SegmentationDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:113:9-115:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:115:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:114:13-63
+activity#org.boofcv.android.ip.ThresholdDisplayActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:116:9-118:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:118:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:117:13-56
+activity#org.boofcv.android.recognition.FiducialSquareBinaryActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:119:9-121:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:121:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:120:13-69
+activity#org.boofcv.android.recognition.FiducialSquareBinaryHelpActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:122:9-82
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:122:19-79
+activity#org.boofcv.android.recognition.FiducialSquareImageActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:123:9-125:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:125:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:124:13-68
+activity#org.boofcv.android.recognition.FiducialSquareImageHelpActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:126:9-81
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:126:19-78
+activity#org.boofcv.android.recognition.FiducialLearnActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:127:9-129:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:129:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:128:13-62
+activity#org.boofcv.android.recognition.FiducialImageLibraryAcitivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:130:9-79
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:130:19-76
+activity#org.boofcv.android.recognition.FiducialSelectHelpActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:131:9-76
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:131:19-73
+activity#org.boofcv.android.recognition.FiducialCalibrationActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:132:9-134:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:134:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:133:13-68
+activity#org.boofcv.android.recognition.FiducialCalibrationHelpActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:135:9-137:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:137:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:136:13-72
+activity#org.boofcv.android.tracker.StaticBackgroundMotionActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:138:9-140:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:140:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:139:13-67
+activity#org.boofcv.android.detect.DetectBlackPolygonActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:141:9-143:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:143:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:142:13-62
+activity#org.boofcv.android.detect.DetectBlackPolygonHelpActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:144:9-75
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:144:19-72
+activity#org.boofcv.android.detect.DetectBlackEllipseActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:145:9-147:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:147:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:146:13-62
+activity#org.boofcv.android.recognition.ImageClassificationActivity
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:149:9-151:53
+	android:screenOrientation
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:151:13-50
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:150:13-68
+meta-data#com.google.android.gms.version
+ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:153:9-155:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-basement-8.4.0.aar/f6981cfbcd3a2b559b0a0c156b1f82a5/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-basement-8.4.0.aar/f6981cfbcd3a2b559b0a0c156b1f82a5/AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:155:13-66
+	android:name
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml:154:13-58
+uses-sdk
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+MERGED from [com.android.support:appcompat-v7:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.1.0.aar/863009f38247be5b5a454af2ac55c059/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.1.0.aar/863009f38247be5b5a454af2ac55c059/AndroidManifest.xml:21:5-23:78
+MERGED from [com.google.android.gms:play-services-appindexing:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-appindexing-8.4.0.aar/f8e0e81b33949f7e086c3d4d7a0a683b/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-appindexing:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-appindexing-8.4.0.aar/f8e0e81b33949f7e086c3d4d7a0a683b/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-base:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-base-8.4.0.aar/498637025654e39cfa92e2cbe9a74822/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-base:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-base-8.4.0.aar/498637025654e39cfa92e2cbe9a74822/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-basement-8.4.0.aar/f6981cfbcd3a2b559b0a0c156b1f82a5/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.4.0] /home/omair/.gradle/caches/transforms-1/files-1.1/play-services-basement-8.4.0.aar/f6981cfbcd3a2b559b0a0c156b1f82a5/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-v4-25.1.0.aar/ee47b9b270fb36e620b9e6364688b948/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-v4-25.1.0.aar/ee47b9b270fb36e620b9e6364688b948/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:multidex:1.0.2] /home/omair/.gradle/caches/transforms-1/files-1.1/multidex-1.0.2.aar/b3d1f54eab96501b0c24a4eb27fda46d/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:multidex:1.0.2] /home/omair/.gradle/caches/transforms-1/files-1.1/multidex-1.0.2.aar/b3d1f54eab96501b0c24a4eb27fda46d/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:animated-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-25.1.0.aar/eb9fc89f2b881d8ef3b5c462548ae55f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-25.1.0.aar/eb9fc89f2b881d8ef3b5c462548ae55f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-25.1.0.aar/aace865b84f2f1115e7b47574a903001/AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-vector-drawable:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-25.1.0.aar/aace865b84f2f1115e7b47574a903001/AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-fragment:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-fragment-25.1.0.aar/39cfb0b8dc7eaea052041bbf3f36f9d5/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-fragment-25.1.0.aar/39cfb0b8dc7eaea052041bbf3f36f9d5/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.1.0.aar/598aea7abef0e61315c4c525fcc2f144/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.1.0.aar/598aea7abef0e61315c4c525fcc2f144/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.1.0.aar/4edeef2a8827c403f8a46c6b249f198d/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.1.0.aar/4edeef2a8827c403f8a46c6b249f198d/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.1.0.aar/a1a461cb624e2625bd122bea88727a5f/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.1.0.aar/a1a461cb624e2625bd122bea88727a5f/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-compat-25.1.0.aar/47fb06bcdae2ed77bbe1919c853116f2/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/support-compat-25.1.0.aar/47fb06bcdae2ed77bbe1919c853116f2/AndroidManifest.xml:21:5-23:58
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.1.0] /home/omair/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.1.0.aar/863009f38247be5b5a454af2ac55c059/AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+		ADDED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml
+		INJECTED from /windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/src/main/AndroidManifest.xml

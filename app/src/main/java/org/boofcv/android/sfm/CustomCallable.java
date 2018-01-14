@@ -1,7 +1,6 @@
 package org.boofcv.android.sfm;
 //import org.boofcv.android.sfm.DisparityCalculation;
 import android.os.Environment;
-import android.os.Message;
 import android.util.Log;
 
 import org.ejml.data.DenseMatrix64F;
@@ -11,13 +10,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 import boofcv.struct.image.GrayF32;
 import georegression.geometry.GeometryMath_F64;
 import georegression.struct.point.Point3D_F64;
 
-import org.boofcv.android.sfm.DisparityCalculation;
 /**
  * Created by frank.yitan on 12/04/2016.
  * CustomCallable is used for sending tasks to the thread pool. When a callable is submitted,
@@ -38,6 +41,21 @@ public class CustomCallable implements Callable {
     private GrayF32 disparity;
     private int thread_id, numPoints =0;
     private String plycontent = "", plypoints="";
+    private List<Float> vertices = new ArrayList<Float>();
+
+    /* semaphores stuff */
+    private final Condition condition;
+    private final Semaphore[] semaphores;
+    private final int index;
+    private final ReentrantLock lock;
+    boolean isSuspended = false;
+
+    public CustomCallable(final Semaphore[] semaphores, final int index) {
+        this.semaphores = semaphores;
+        this.index = index;
+        lock = new ReentrantLock();
+        this.condition = lock.newCondition();
+    }
 
 
     public void setter(GrayF32 disp, int rD, int minDisp, int w, int h, double bl, double f_x, double f_y, double c_x, double c_y, DenseMatrix64F r_Mat, int i_th, int j_th, int t_id, boolean valuesdone) {
@@ -144,30 +162,59 @@ public class CustomCallable implements Callable {
                         //rotate into the original left camera frame
                         GeometryMath_F64.multTran(rMatrix, pointRect, pointLeft);
                         //plypoints += Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + " 255 255 255\n";
-                        plypoints += Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + "\n";
+                        //plypoints += Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + "\n";
+                        vertices.add((float) pointLeft.x);
+                        vertices.add((float) pointLeft.y);
+                        vertices.add((float) pointLeft.z);
                         numPoints++;
                     }
                 }
                 // write points to file
 
-                Log.d("CALLABLE", "\nPOINTSSSSSSS" + thread_id+ " == " + plypoints.length());
+                //Log.d("CALLABLE", "\nPOINTSSSSSSS" + thread_id+ " == " + vertices.size());
                 //DisparityCalculation.THREADS_DONE = DisparityCalculation.THREADS_DONE + 1;
                 DisparityCalculation.THREADS_DONE++;
-                writeHeaders(numPoints);
+                /*writeHeaders(numPoints);
                 plycontent+=plypoints; // add points after headers
                 String filename = "points_"+thread_id+".ply";
-                appendLog(plycontent, filename, thread_id); // write file to disk
+                appendLog(plycontent, filename, thread_id); // write file to disk */
             }
 
             // After work is finished, send a message to CustomThreadPoolManager
                 Log.d("CALLABLE", "\n" + "\n" + "Parallel processing " + Util.MESSAGE_ID + "Thread " +
                         String.valueOf(Thread.currentThread().getId()) + " " +
-                        String.valueOf(Thread.currentThread().getName()) + " completed " + thread_id);
+                        String.valueOf(Thread.currentThread().getName()) + " completed " + thread_id + " Num Points = " + vertices.size()/3);
 
 
             /*Message message = Util.createMessage(Util.MESSAGE_ID, "Thread " +
                     String.valueOf(Thread.currentThread().getId()) + " " +
                     String.valueOf(Thread.currentThread().getName()) + " completed " + test); */
+
+            /// time to add all vertices into the finalvertices
+            final Semaphore currentSemaphore = semaphores[index];
+            final Semaphore nextSemaphore = semaphores[(index+1) %semaphores.length];
+
+            try {
+                //while (true) {
+                    currentSemaphore.acquire();
+                    Log.d("CALLABLE", "ITS MY TURN TO WRITE " + index);
+                    lock.lock();
+                    while (isSuspended) {
+                        condition.await();
+                    }
+                    lock.unlock();
+                    //sleep(300); // we use a sleep call to mock some lengthy work.
+                    for(int i=0; i<vertices.size(); i++) {
+                        DisparityActivity.allVerticecs.add(vertices.get(i));
+                    }
+                    Log.d("CALLABLE", "I'M RELEASING " + (index+1));
+                    nextSemaphore.release();
+                //}
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //vertices.removeAll(vertices);
 
             if(mCustomThreadPoolManagerWeakReference != null
                     && mCustomThreadPoolManagerWeakReference.get() != null) {

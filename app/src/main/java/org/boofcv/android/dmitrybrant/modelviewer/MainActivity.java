@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
             InputStream stream = getApplicationContext().getAssets().open("chair.ply");
             //setCurrentModel(new StlModel(stream));
 
-            setCurrentModel(new PlyModel(stream));
+            setCurrentModel(new PlyModel(vertices));
             stream.close();
         } catch (IOException e) {
             e.printStackTrace();

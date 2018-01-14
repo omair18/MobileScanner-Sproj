@@ -1,0 +1,10 @@
+#Thu Jan 11 19:30:00 PKT 2018
+path.2=classes2.dex
+path.1=classes.dex
+path.0=classes.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+base.2=/windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/build/intermediates/transforms/dexMerger/release/1
+base.1=/windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/build/intermediates/transforms/dexMerger/release/1
+base.0=/windows/D/Linux/workspace/Andriod/AS/MobileScanner Sproj/app/build/intermediates/transforms/dexMerger/release/0
