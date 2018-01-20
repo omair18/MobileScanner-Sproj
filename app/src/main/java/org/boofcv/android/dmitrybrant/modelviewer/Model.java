@@ -106,6 +106,7 @@ public abstract class Model {
     }
 
     protected float getBoundScale(float boundSize) {
+        boundSize = 75;
         float scaleX = (maxX - minX) / boundSize;
         float scaleY = (maxY - minY) / boundSize;
         float scaleZ = (maxZ - minZ) / boundSize;

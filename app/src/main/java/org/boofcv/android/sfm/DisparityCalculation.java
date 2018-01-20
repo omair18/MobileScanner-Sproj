@@ -1,10 +1,19 @@
 package org.boofcv.android.sfm;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.util.SizeF;
 import android.view.View;
 
+import org.boofcv.android.camera2basic.Camera2BasicFragment;
 import org.ddogleg.fitting.modelset.DistanceFromModel;
 import org.ddogleg.fitting.modelset.ModelGenerator;
 import org.ddogleg.fitting.modelset.ModelManager;
@@ -25,7 +34,7 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
+import boofcv.gui.d3.DisparityPointCloudViewer;
 import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.abst.feature.disparity.StereoDisparity;
@@ -45,14 +54,19 @@ import boofcv.alg.misc.ImageMiscOps;
 import boofcv.core.image.border.BorderType;
 import boofcv.factory.geo.EnumEpipolar;
 import boofcv.factory.geo.FactoryMultiView;
+import boofcv.gui.d3.PointCloudTiltPanel;
+import boofcv.io.image.ConvertBufferedImage;
 import boofcv.gui.image.ShowImages;
 import boofcv.gui.image.VisualizeImageData;
 import boofcv.struct.calib.CameraPinholeRadial;
+import boofcv.struct.distort.DoNothing2Transform2_F64;
 import boofcv.struct.distort.Point2Transform2_F64;
 import boofcv.struct.feature.AssociatedIndex;
 import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.geo.AssociatedPair;
 import boofcv.struct.image.GrayF32;
+import boofcv.struct.image.GrayU8;
+import boofcv.struct.image.ImageGray;
 import boofcv.struct.image.ImageType;
 import georegression.fitting.se.ModelManagerSe3_F64;
 import georegression.geometry.GeometryMath_F64;
@@ -60,6 +74,9 @@ import georegression.struct.point.Point2D_F64;
 import georegression.struct.point.Vector3D_F64;
 import georegression.struct.se.Se3_F64;
 import georegression.struct.point.Point3D_F64;
+
+import static boofcv.android.ConvertBitmap.grayToBitmap;
+import static java.lang.Math.tan;
 import static org.ejml.ops.CommonOps.transpose;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -80,6 +97,7 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 	DetectDescribePoint<GrayF32,Desc> detDesc;
 	AssociateDescription<Desc> associate;
 	CameraPinholeRadial intrinsic;
+	//Camera mCamera;
 
 	StereoDisparity<GrayF32, GrayF32> disparityAlg;
 	//Variables for storing the point cloud
@@ -93,6 +111,7 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 	public String path_public = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 
 	public static int THREADS_DONE = 0;
+	public Se3_F64 leftToRight;
 
 	FastQueue<Desc> listSrc;
 	FastQueue<Desc> listDst;
@@ -103,10 +122,11 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 
 	boolean directionLeftToRight;
 
-	GrayF32 distortedLeft;
-	GrayF32 distortedRight;
-	GrayF32 rectifiedLeft;
-	GrayF32 rectifiedRight;
+	public GrayF32 distortedLeft;
+	public GrayF32 distortedRight;
+	public GrayF32 rectifiedLeft;
+	public GrayF32 rectifiedRight;
+	public Bitmap colorimage;
 
 	// Laplacian that has been applied to rectified images
 	GrayF32 edgeLeft;
@@ -117,6 +137,7 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 
 	public static Semaphore[] semaphores = new Semaphore[4]; // 4 threads, so 4 semaphores
 
+
     private void initSemaphores() {
 		semaphores[0] = new Semaphore(1);
 		semaphores[1] = new Semaphore(0);
@@ -125,7 +146,7 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 	}
 
 
-	private CustomThreadPoolManager mCustomThreadPoolManager;
+	private static CustomThreadPoolManager mCustomThreadPoolManager;
 
 	public DisparityCalculation(DetectDescribePoint<GrayF32, Desc> detDesc,
 								AssociateDescription<Desc> associate ,
@@ -163,7 +184,21 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 
 		associate.setSource(listSrc);
 	}
+	public static void resetEverything() {
+	    /*if(listSrc != null)
+	    	listSrc.reset();
+		if(listDst != null)
+	    	listDst.reset();
+		if(locationDst != null)
+	    	locationDst.reset();
+		if(locationSrc != null)
+	    	locationSrc.reset();
+	    if(inliersPixel != null);
+	    	inliersPixel.clear(); */
+	    if(mCustomThreadPoolManager != null)
+	    	mCustomThreadPoolManager.cancelAllTasks();
 
+	}
 	public void setDestination( GrayF32 image ) {
 		distortedRight.setTo(image);
 		detDesc.detect(image);
@@ -192,7 +227,7 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 		associate.associate(); //find the best matches
 		List<AssociatedPair> pairs = convertToNormalizedCoordinates();
 
-		Se3_F64 leftToRight = estimateCameraMotion(pairs); //estimate rotation & translation from image
+		leftToRight = estimateCameraMotion(pairs); //estimate rotation & translation from image
 
 		if( leftToRight == null ) {
 			Log.e("disparity","estimate motion failed");
@@ -239,6 +274,7 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 	/**.
 	 * Computes the disparity between the two rectified images
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 	public void computeDisparity() {
 		if( disparityAlg == null )
 			return;
@@ -247,24 +283,28 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 		//Calling the point cloud function here
 		long start = System.currentTimeMillis( );
 		Log.d("timeMe", "Entering disparity to point cloud");
-		disparityToPointCloud(rectified_pass_mat, r_matrix, t_matrix);
+
+		//leftimage = grayToBitmap(rectifiedLeft, Bitmap.Config.ARGB_8888);
+
+		disparityToPointCloud(rectified_pass_mat, r_matrix, t_matrix, colorimage);
+		//newdisparityToPointCloud();
 		Log.d("timeMe", "Successfully leaving disparity to point cloud");
 		long end = System.currentTimeMillis();
 		long diff = end - start;
 		Log.d("pcloud", "Time for point cloud processing: " + Long.toString(diff));
-		my_file_write(data, "mine.txt");
+		//my_file_write(data, "mine.txt");
 	}
 
-	public void disparityToPointCloud(DenseMatrix64F rectified_pass_mat, DenseMatrix64F r_matrix, Vector3D_F64 t_matrix) {
+	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+	public void disparityToPointCloud(DenseMatrix64F rectified_pass_mat, DenseMatrix64F r_matrix, Vector3D_F64 t_matrix, Bitmap colortimage) {
 		//The point cloud will be in the left cameras reference frame
 		//DMatrixRMaj rectK = rectAlg.getCalibrationMatrix();
 		//DMatrixRMaj rectR = rectAlg.getRectifiedRotation();
 		//estimation of the baseline/distance between two camera centers
 		//DenseMatrix64F r_inverse = null;
-
 		final DenseMatrix64F r_inverse = r_matrix;
 		final DenseMatrix64F rMatrix = r_matrix;
-		transpose(r_matrix, r_inverse); //why do this step?
+		//transpose(r_matrix, r_inverse); //why do this step?
 		Log.d("check123", "This is R inverse/Rectified Rotation? : " + r_inverse.toString() + " and this is" +
 				"the rotation: " + r_matrix.toString());
 
@@ -273,7 +313,12 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 		result[1] = r_inverse.get(1, 0) * t_matrix.x + r_inverse.get(1, 1) * t_matrix.y + r_inverse.get(1, 2) * t_matrix.z;
 		result[2] = r_inverse.get(2, 0) * t_matrix.x + r_inverse.get(2, 1) * t_matrix.y + r_inverse.get(2, 2) * t_matrix.z;
 
-		final double baseline = Math.sqrt(result[0] * result[0] + result[1] * result[1] + result[2] * result[2]); //baseline formula 2
+		//final double baseline = Math.sqrt(result[0] * result[0] + result[1] * result[1] + result[2] * result[2]); //baseline formula 2
+		final double baseline = leftToRight.getT().norm();
+		float sensor_width = Camera2BasicFragment.sensor_width;
+		float sensor_height = Camera2BasicFragment.sensor_height;
+		float focal_length = Camera2BasicFragment.focal_length;
+
 		Log.d("check123", "This is the baseline: " + baseline + "\n and " +
 				"this is the translation:" + t_matrix.toString());
 
@@ -336,7 +381,7 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 				y_0 = getDisparity().getHeight()-1; // 5 to 9
 
 			}
-			callable.setter(disparityAlg.getDisparity() ,rangeDisparity,disparityAlg.getMinDisparity(), x_0, y_0, baseline, fx, fy, cx, cy, r_matrix, i, j, k, flag);
+			callable.setter(disparityAlg.getDisparity() ,rangeDisparity,disparityAlg.getMinDisparity(), x_0, y_0, baseline, fx, fy, cx, cy, r_matrix, sensor_width, sensor_height, focal_length, i, j, k, flag, colorimage);
             callable.setCustomThreadPoolManager(mCustomThreadPoolManager);
             mCustomThreadPoolManager.addCallable(callable);
 		}
@@ -344,278 +389,8 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 		if(THREADS_DONE >= 3) {
 
 			Log.d("timeMe", "\n" + "\n" + "Parallel processing ENDED!");
-			DisparityActivity.ptCloudBtn.setVisibility(View.VISIBLE);
+			//DisparityActivity.ptCloudBtn.setVisibility(View.VISIBLE);
 		}
-
-		//multi threading goes here. Make 4 threads and divide the diparity image
-/*		final int x_0 = getDisparity().getWidth();
-		final int y_0 = getDisparity().getHeight();
-		ExecutorService es = Executors.newCachedThreadPool();
-		int f1 = 0, f2 = 0, f3 = 0, f4 = 0;
-		es.execute(new Runnable() {
-			@Override
-			public void run() {
-				int idx_1 = 0;
-				Log.d("timeMe", "Thread " + Thread.currentThread().getId() + " has begun");
-				long startTime = System.currentTimeMillis();
-
-				for (int i = 0; i <= x_0 / 2 - 1; i++) {
-					for (int j = 0; j <= y_0 / 2 - 1; j++) {
-//						synchronized (this) {
-							double d = getDisparity().unsafe_get(i, j) + disparityAlg.getMinDisparity();
-							// skip over pixels were no correspondence was found
-							idx_1++;
-//							if (d >= rangeDisparity)
-//								continue;
-
-							// Coordinate in rectified camera frame
-							pointRect.z = baseline * fx / d;
-							pointRect.x = pointRect.z * (i - cx) / fx;
-							pointRect.y = pointRect.z * (j - cy) / fy;
-
-							// rotate into the original left camera frame.
-							GeometryMath_F64.multTran(rMatrix, pointRect, pointLeft);
-							mat_parallel += "Thread 1: " +  Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + ";";
-
-//						}
-					}
-				}
-				Log.d("timeMe", idx_1 + " Thread " + Thread.currentThread().getId() + " has ended?");
-				long endTime = System.currentTimeMillis();
-				Log.d("timeMe", "Time for parallel for Thread: " + Thread.currentThread().getId() + " " + Long.toString(endTime - startTime));
-//				f1 = 1;
-			}
-		});
-
-		es.execute(new Runnable() {
-			@Override
-			public void run() {
-				int idx_2 = 0;
-				Log.d("timeMe", "Thread " + Thread.currentThread().getId() + " has begun");
-				long startTime = System.currentTimeMillis();
-//				synchronized (this) {
-					for (int i = x_0 / 2; i <= x_0; i++) {
-						for (int j = 0; j <= y_0 / 2 - 1; j++) {
-							double d = getDisparity().unsafe_get(i, j) + disparityAlg.getMinDisparity();
-							idx_2++;
-							// skip over pixels were no correspondence was found
-							if (d >= rangeDisparity)
-								continue;
-
-							// Coordinate in rectified camera frame
-							pointRect.z = baseline * fx / d;
-							pointRect.x = pointRect.z * (i - cx) / fx;
-							pointRect.y = pointRect.z * (j - cy) / fy;
-
-							// rotate into the original left camera frame.
-							GeometryMath_F64.multTran(rMatrix, pointRect, pointLeft);
-							mat_parallel += "Thread 2: " + Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + ";";
-						}
-					}
-//				}
-				Log.d("timeMe", idx_2 + " Thread " + Thread.currentThread().getId() + " has ended?");
-				long endTime = System.currentTimeMillis();
-				Log.d("timeMe", " Time for parallel for Thread: " + Thread.currentThread().getId() + " " + Long.toString(endTime - startTime));
-
-			}
-		});
-
-		es.execute(new Runnable() {
-			@Override
-			public void run() {
-				int idx_3 = 0;
-				Log.d("timeMe", "Thread " + Thread.currentThread().getId() + " has begun");
-				long startTime = System.currentTimeMillis();
-
-//				synchronized (this) {
-					for (int i = 0; i <= x_0/2 - 1 ; i++) {
-						for(int j = y_0/2; j <= y_0 - 1; j++) {
-							double d = getDisparity().unsafe_get(i,j) + disparityAlg.getMinDisparity();
-							// skip over pixels were no correspondence was found
-							if( d >= rangeDisparity )
-								continue;
-
-							// Coordinate in rectified camera frame
-							pointRect.z = baseline*fx/d;
-							pointRect.x = pointRect.z*(i - cx)/fx;
-							pointRect.y = pointRect.z*(j - cy)/fy;
-
-							// rotate into the original left camera frame.
-							GeometryMath_F64.multTran(rMatrix, pointRect, pointLeft);
-							mat_parallel += "Thread 3: " +
-									Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + ";";
-							idx_3++;
-						}
-					}
-//				}
-
-				Log.d("timeMe", idx_3 + " Thread " + Thread.currentThread().getId() + " has ended?");
-				long endTime = System.currentTimeMillis();
-				Log.d("timeMe" , "Time for parallel for Thread: " + Thread.currentThread().getId() + " " +  Long.toString(endTime - startTime));
-			}
-		});
-		es.shutdown();*/
-
-//		int o = 0;
-//		while(o < 1000000) {
-//			o++;
-//		}
-//		try {
-//			boolean finished = es.awaitTermination(10, TimeUnit.MINUTES);
-//		} catch (InterruptedException io) {
-//			Log.d("timeMe", io.getMessage() + " " + "Stack trace: ");
-//		}
-//		Thread[] threads = new Thread[2];
-//		//thread 1 goes from (0 , 0) to (x_0/2 - 1, y_0/2 - 1)
-//		threads[0] = new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				int idx_1 = 0;
-//				Log.d("timeMe", "Thread " + Thread.currentThread().getId() + " has begun");
-//				long startTime = System.currentTimeMillis();
-//
-//				for (int i = 0; i <= x_0/2 - 1  ; i++) {
-//					for(int j = 0; j <= y_0/2 - 1; j++) {
-//						synchronized (this) {
-//							double d = getDisparity().unsafe_get(i,j) + disparityAlg.getMinDisparity();
-//							// skip over pixels were no correspondence was found
-//							idx_1++;
-//							if( d >= rangeDisparity )
-//								continue;
-//
-//							// Coordinate in rectified camera frame
-//							pointRect.z = baseline*fx/d;
-//							pointRect.x = pointRect.z*(i - cx)/fx;
-//							pointRect.y = pointRect.z*(j - cy)/fy;
-//
-//							// rotate into the original left camera frame.
-//							GeometryMath_F64.multTran(rMatrix, pointRect, pointLeft);
-//							mat_parallel += Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + ";";
-//
-//						}
-//					}
-//				}
-//				Log.d("timeMe", idx_1 + " Thread " + Thread.currentThread().getId() + " has ended?");
-//				long endTime = System.currentTimeMillis();
-//				Log.d("timeMe" , "Time for parallel for Thread: " + Thread.currentThread().getId() + " " +  Long.toString(endTime - startTime));
-//			}
-//		});//.start();
-//
-//		//thread 2 goes from (x_0/2 , 0) to (x_0 , y_0/2 - 1)
-//		threads[1] =  new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				int idx_2 = 0;
-//				Log.d("timeMe", "Thread " + Thread.currentThread().getId() + " has begun");
-//				long startTime = System.currentTimeMillis();
-//				synchronized (this) {
-//					for (int i = x_0/2; i <= x_0  ; i++) {
-//						for(int j = 0; j <= y_0/2 - 1; j++) {
-//							double d = getDisparity().unsafe_get(i,j) + disparityAlg.getMinDisparity();
-//							idx_2++;
-//							// skip over pixels were no correspondence was found
-//							if( d >= rangeDisparity )
-//								continue;
-//
-//							// Coordinate in rectified camera frame
-//							pointRect.z = baseline*fx/d;
-//							pointRect.x = pointRect.z*(i - cx)/fx;
-//							pointRect.y = pointRect.z*(j - cy)/fy;
-//
-//							// rotate into the original left camera frame.
-//							GeometryMath_F64.multTran(rMatrix, pointRect, pointLeft);
-//							mat_parallel += Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + ";";
-//						}
-//					}
-//				}
-//				Log.d("timeMe", idx_2 + " Thread " + Thread.currentThread().getId() + " has ended?");
-//				long endTime = System.currentTimeMillis();
-//				Log.d("timeMe" , " Time for parallel for Thread: " + Thread.currentThread().getId() + " " +  Long.toString(endTime - startTime));
-//
-//		}); //.start();
-
-//		//thread 3 goes from (0 , y_0/2-1) to (x_0/2 - 1, y_0/2)
-//		threads[2] = new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				int idx_3 = 0;
-//				Log.d("timeMe", "Thread " + Thread.currentThread().getId() + " has begun");
-//				long startTime = System.currentTimeMillis();
-//
-//				synchronized (this) {
-//					for (int i = 0; i <= x_0/2 - 1 ; i++) {
-//						for(int j = y_0/2; j <= y_0; j++) {
-//							double d = getDisparity().unsafe_get(i,j) + disparityAlg.getMinDisparity();
-//							// skip over pixels were no correspondence was found
-//							if( d >= rangeDisparity )
-//								continue;
-//
-//							// Coordinate in rectified camera frame
-//							pointRect.z = baseline*fx/d;
-//							pointRect.x = pointRect.z*(i - cx)/fx;
-//							pointRect.y = pointRect.z*(j - cy)/fy;
-//
-//							// rotate into the original left camera frame.
-//							GeometryMath_F64.multTran(rMatrix, pointRect, pointLeft);
-//							mat_parallel += Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + ";";
-//							idx_3++;
-//						}
-//					}
-//				}
-//
-//				Log.d("timeMe", idx_3 + " Thread " + Thread.currentThread().getId() + " has ended?");
-//				long endTime = System.currentTimeMillis();
-//				Log.d("timeMe" , "Time for parallel for Thread: " + Thread.currentThread().getId() + " " +  Long.toString(endTime - startTime));
-//
-//			}
-//		});//.start();
-//
-//		for(int i = 0; i <= 1; i++)
-//			threads[i].start();
-//
-//		for (Thread t : threads) {
-//			try {
-//				Log.d("timeMe", "Joining thread is:" + t.getId());
-//				t.join();
-//				Log.d("timeMe", "Thread: " + t.getId() + " has successfully joined");
-//			} catch (InterruptedException e) {
-//				Log.d("timeMe", "Try catch 0: " + e.toString() + " " +
-//					e.getLocalizedMessage());
-//			}
-//		}
-//		for (int i = 0 ; i <= 1; i++) {
-//			threads[i].join();
-//		}
-
-//		//thread 4 goes from (x_0/2 - 1, y_0/2 - 1) to (x_0 , y_0)
-//		new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				Log.d("timeMe", "Thread " + Thread.currentThread().getId() + " has begun");
-//				long startTime = System.currentTimeMillis();
-//
-//				for (int i = x_0/2; i <= x_0  ; i++) {
-//					for(int j = y_0/2; j <= y_0; j++) {
-//						double d = getDisparity().unsafe_get(i,j) + disparityAlg.getMinDisparity();
-//						// skip over pixels were no correspondence was found
-//						if( d >= rangeDisparity )
-//							continue;
-//
-//						// Coordinate in rectified camera frame
-//						pointRect.z = baseline*fx/d;
-//						pointRect.x = pointRect.z*(i - cx)/fx;
-//						pointRect.y = pointRect.z*(j - cy)/fy;
-//
-//						// rotate into the original left camera frame.
-//						GeometryMath_F64.multTran(rMatrix, pointRect, pointLeft);
-//						mat_parallel += Double.toString(pointLeft.x) + " " + Double.toString(pointLeft.y) + " " + Double.toString(pointLeft.z) + ";";
-//					}
-//				}
-//				Log.d("timeMe", "Thread " + Thread.currentThread().getId() + " has ended?");
-//				long endTime = System.currentTimeMillis();
-//				Log.d("timeMe" , "Time for parallel for Thread: " + Thread.currentThread().getId() + " " +  Long.toString(endTime - startTime));
-//			}
-//		}).start();
 			Log.d("timeMe", "Returning from disparityto3D");
 	}
 
@@ -656,7 +431,7 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 		}
 	}
 
-	public void my_file_write(String data, String fileName){
+	/*public void my_file_write(String data, String fileName){
 		try {
 			Log.d("pcloud", "Entered write operation!");
 			String dummy = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
@@ -667,7 +442,7 @@ public class DisparityCalculation<Desc extends TupleDesc> {
 			Log.d("pcloud","Exception during file writing " +  e.toString());
 			e.printStackTrace();
 		}
-	}
+	} */
 
 	/**
 	 * Convert a set of associated point features from pixel coordinates into normalized image coordinates.

@@ -19,4 +19,5 @@ void main()
     float specular = pow(max(dot(halfDir, v_Normal), 0.0), specular_exp);
     float diffuse = max(dot(lightPosNorm, v_Normal), 0.0);
     gl_FragColor = vec4(u_ambientColor * (1.0 - diffuse) + u_diffuseColor * (diffuse - specular) + u_specularColor * specular, 1.0);
+    //gl_FragColor = vec4(u_ambientColor,1.0);// * (1.0 - diffuse) + u_diffuseColor * (diffuse - specular) + u_specularColor * specular, 1.0);
 }

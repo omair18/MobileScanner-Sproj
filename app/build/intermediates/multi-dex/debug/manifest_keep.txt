@@ -1,3 +1,0 @@
-# Referenced at /home/omair/Downloads/MobileScanner Sproj/app/build/intermediates/manifests/full/debug/AndroidManifest.xml:30
--keep class org.boofcv.android.dmitrybrant.modelviewer.ModelViewerApplication { <init>(...); }
-

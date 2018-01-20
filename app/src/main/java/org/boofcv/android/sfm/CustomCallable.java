@@ -1,5 +1,7 @@
 package org.boofcv.android.sfm;
 //import org.boofcv.android.sfm.DisparityCalculation;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Environment;
 import android.util.Log;
 
@@ -34,6 +36,7 @@ public class CustomCallable implements Callable {
     private WeakReference<CustomThreadPoolManager> mCustomThreadPoolManagerWeakReference;
     private int rangeDispairty, width, height, minDisparity, ith, jth;
     private double baseline, fx, fy, cx, cy;
+    private float sensor_width, sensor_height, focal_length;
     private DenseMatrix64F rMatrix;
     private Point3D_F64 pointRect = new Point3D_F64();
     private Point3D_F64 pointLeft = new Point3D_F64();
@@ -42,6 +45,7 @@ public class CustomCallable implements Callable {
     private int thread_id, numPoints =0;
     private String plycontent = "", plypoints="";
     private List<Float> vertices = new ArrayList<Float>();
+    private Bitmap Srcimage;
 
     /* semaphores stuff */
     private final Condition condition;
@@ -58,7 +62,7 @@ public class CustomCallable implements Callable {
     }
 
 
-    public void setter(GrayF32 disp, int rD, int minDisp, int w, int h, double bl, double f_x, double f_y, double c_x, double c_y, DenseMatrix64F r_Mat, int i_th, int j_th, int t_id, boolean valuesdone) {
+    public void setter(GrayF32 disp, int rD, int minDisp, int w, int h, double bl, double f_x, double f_y, double c_x, double c_y, DenseMatrix64F r_Mat, float s_width, float s_height, float f_length, int i_th, int j_th, int t_id, boolean valuesdone, Bitmap leftimage) {
 
         disparity = disp;
        rangeDispairty = rD;
@@ -70,69 +74,20 @@ public class CustomCallable implements Callable {
        fy = f_y;
        cx = c_x;
        cy = c_y;
+       sensor_width = s_width;
+       sensor_height = s_height;
+       focal_length = f_length;
        rMatrix = r_Mat;
        ith = i_th; // for loop iterators
        jth = j_th;
        thread_id = t_id;
+       Srcimage = leftimage.copy(leftimage.getConfig(), true);
        if(valuesdone == true)
            isSet = true; //a check to see if all values have been set or not
        else
            isSet = false;
     }
-    public void writeHeaders(int idx) {
-        plycontent += "ply\n";
-        plycontent += "format ascii 1.0\n";
-        plycontent+= "element vertex ";
-        plycontent += Integer.toString(idx) + "\n";
-        plycontent += "property float x\n";
-        plycontent += "property float y\n";
-        plycontent += "property float z\n";
-        plycontent += "property uchar diffuse_red\n";
-        plycontent += "property uchar diffuse_green\n";
-        plycontent += "property uchar diffuse_blue\n";
-        plycontent += "end_header\n";
-    }
 
-    public static void appendLog(String text, String fileName, int thread_id)
-    {
-        File logFile = new File(Environment.getExternalStorageDirectory() + "/" + fileName);
-        boolean deleted = logFile.delete();
-        Log.d("check123", "File details before injection: " + logFile.getAbsolutePath() + "\n" +
-                "Does it exist? : " + logFile.isFile() + "\n" +
-                "Is it a directory?: " +  logFile.isDirectory() + "\n" +
-                "It has a length of: " + logFile.length());
-        if (!logFile.exists())
-        {
-            Log.d("check123", "The file creation failed");
-            try
-            {
-                logFile.createNewFile();
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        try
-        {
-            Log.d("check123", "The file creation succeeded");
-            // BufferedWriter for performance, true to set append to file flag
-            BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
-            buf.append(text);
-            buf.newLine();
-            buf.close();
-            Log.d("check123", "File details after injection: " + logFile.getAbsolutePath() + "\n" +
-                    "Does it exist? : " + logFile.isFile() + "\n" +
-                    "Is it a directory?: " +  logFile.isDirectory() + "\n" +
-                    "It has a length of: " + logFile.length());
-
-            //DisparityActivity.PLYFiles_Paths[thread_id] = logFile.getAbsolutePath();
-            DisparityActivity.PLYFiles_Paths[thread_id] = fileName;
-        } catch (IOException e)
-        {
-            Log.d("check123", "IOException reached: " + e.toString());
-            e.printStackTrace();
-        }
-    }
    @Override
     public Object call() throws Exception {
         try {
@@ -148,16 +103,32 @@ public class CustomCallable implements Callable {
                 Log.d("CALLABLE", "\n" + "\n" + "Parallel processing " + Util.MESSAGE_ID + "Thread " +
                         String.valueOf(Thread.currentThread().getId()) + " " +
                         String.valueOf(Thread.currentThread().getName()) + " STARTED " + thread_id);
+                float pixel_width = sensor_width/disparity.getWidth();
+                float pixel_height = sensor_height/disparity.getHeight();
 
                 for (int i = ith; i <= width; i++) {
                     for (int j = jth; j <= height; j++) {
                         double d = disparity.unsafe_get(i, j) + minDisparity;
-                        if (d >= rangeDispairty)
+                        int color = Srcimage.getPixel(i,j); //get color
+
+                        /*Log.d("CALLABLE","COLOR = " + color);
+                        Log.d("CALLABLE","COLOR R= " + Color.red(color));
+                        Log.d("CALLABLE","COLOR G= " + Color.blue(color));
+                        Log.d("CALLABLE","COLOR B= " + Color.green(color));
+                        Log.d("CALLABLE","COLOR A= " + Color.alpha(color)); */
+
+                        double depth = (disparity.unsafe_get(i, j)/255)*(rangeDispairty) + minDisparity;
+                        pointRect.z = depth;
+                        pointRect.x = (i*pixel_width - sensor_width/2.0)/focal_length*depth;
+                        pointRect.y = (j*pixel_height - sensor_height/2.0)/focal_length*depth;
+
+                        /*if (d >= rangeDispairty)
                             continue;
                         // coordinate in rectified camera frame
                         pointRect.z = baseline * fx / d;
                         pointRect.x = pointRect.z * (i - cx) / fx;
-                        pointRect.y = pointRect.z * (j - cy) / fy;
+                        pointRect.y = pointRect.z * (j - cy) / fy; */
+                        //pointRect.z =
 
                         //rotate into the original left camera frame
                         GeometryMath_F64.multTran(rMatrix, pointRect, pointLeft);
@@ -166,6 +137,10 @@ public class CustomCallable implements Callable {
                         vertices.add((float) pointLeft.x);
                         vertices.add((float) pointLeft.y);
                         vertices.add((float) pointLeft.z);
+                        vertices.add((float) Color.red(color));
+                        vertices.add((float) Color.blue(color));
+                        vertices.add((float) Color.green(color));
+                        vertices.add((float) Color.alpha(color));
                         numPoints++;
                     }
                 }
@@ -173,7 +148,6 @@ public class CustomCallable implements Callable {
 
                 //Log.d("CALLABLE", "\nPOINTSSSSSSS" + thread_id+ " == " + vertices.size());
                 //DisparityCalculation.THREADS_DONE = DisparityCalculation.THREADS_DONE + 1;
-                DisparityCalculation.THREADS_DONE++;
                 /*writeHeaders(numPoints);
                 plycontent+=plypoints; // add points after headers
                 String filename = "points_"+thread_id+".ply";
@@ -183,7 +157,7 @@ public class CustomCallable implements Callable {
             // After work is finished, send a message to CustomThreadPoolManager
                 Log.d("CALLABLE", "\n" + "\n" + "Parallel processing " + Util.MESSAGE_ID + "Thread " +
                         String.valueOf(Thread.currentThread().getId()) + " " +
-                        String.valueOf(Thread.currentThread().getName()) + " completed " + thread_id + " Num Points = " + vertices.size()/3);
+                        String.valueOf(Thread.currentThread().getName()) + " completed " + thread_id + " Num Points = " + vertices.size()/3 + " " + numPoints);
 
 
             /*Message message = Util.createMessage(Util.MESSAGE_ID, "Thread " +
@@ -207,7 +181,8 @@ public class CustomCallable implements Callable {
                     for(int i=0; i<vertices.size(); i++) {
                         DisparityActivity.allVerticecs.add(vertices.get(i));
                     }
-                    Log.d("CALLABLE", "I'M RELEASING " + (index+1));
+                    Log.d("CALLABLE", "I'M RELEASING " + (index+1) + "CURRENT VERTICES = " + DisparityActivity.allVerticecs.size());
+                    DisparityCalculation.THREADS_DONE++;
                     nextSemaphore.release();
                 //}
 

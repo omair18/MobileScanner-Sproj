@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -140,10 +141,12 @@ public class PreferenceActivity extends Activity
 				setupSizeSpinners();
 			}
 		} else if( spinnerVideo == adapterView ) {
-//			Toast.makeText(this,"spinner video",2).show();
 			Log.d("PreferenceActivity","onItemSelected video");
 
 			int selected = spinnerVideo.getSelectedItemPosition();
+			//selected = 10;
+			//Toast.makeText(this,"spinner video",2).show();
+			Log.d("SPINNER", "spinner video " + selected);
 			if( selected != preference.preview ) {
 				preference.preview = selected;
 				prefVideoSize = camera.sizePreview.get(preference.preview);

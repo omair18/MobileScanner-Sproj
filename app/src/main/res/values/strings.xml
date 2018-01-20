@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Mobile Scanner Sproj Build 0</string>
     <string-array name="binary_filters">
         <item>None</item>
@@ -12,6 +13,11 @@
         <item>Denoise</item>
         <item>Thin</item>
     </string-array>
+
+    <string name="picture">Picture</string>
+    <string name="description_info">Info</string>
+    <string name="request_permission">This sample needs camera permission.</string>
+    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
 
     <string-array name="blurs">
         <item>Mean</item>

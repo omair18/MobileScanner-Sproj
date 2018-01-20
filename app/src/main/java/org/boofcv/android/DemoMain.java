@@ -21,6 +21,7 @@ import android.widget.SimpleExpandableListAdapter;
 import org.boofcv.android.assoc.AssociationActivity;
 import org.boofcv.android.calib.CalibrationActivity;
 import org.boofcv.android.calib.UndistortDisplayActivity;
+import org.boofcv.android.camera2basic.CameraActivity;
 import org.boofcv.android.detect.CannyEdgeActivity;
 import org.boofcv.android.detect.ContourShapeFittingActivity;
 import org.boofcv.android.detect.DetectBlackEllipseActivity;
@@ -73,7 +74,7 @@ public class DemoMain extends Activity implements ExpandableListView.OnChildClic
 
 	List<Group> groups = new ArrayList<Group>();
 	Context context;
-	boolean waitingCameraPermissions = true;
+	static boolean waitingCameraPermissions = true;
 	/**
 	 * Called when the activity is first created.
 	 */
@@ -81,6 +82,8 @@ public class DemoMain extends Activity implements ExpandableListView.OnChildClic
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		checkAndRequestPermissions();
 		loadCameraSpecs();
 		createGroups();
 
@@ -106,6 +109,7 @@ public class DemoMain extends Activity implements ExpandableListView.OnChildClic
 	@Override
 	protected void onResume() {
 		super.onResume();
+		checkAndRequestPermissions();
 		if( !waitingCameraPermissions ) {
 			if (preference == null) {
 				preference = new DemoPreference();
@@ -116,17 +120,53 @@ public class DemoMain extends Activity implements ExpandableListView.OnChildClic
 		}
 	}
 
+	private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    private static final int MY_PERMISSIONS_REQUEST_STORAGE = 2;
+
+   private boolean checkAndRequestPermissions() {
+        int permissionCAMERA = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA);
+
+
+        int storagePermission = ContextCompat.checkSelfPermission(this,
+
+
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+
+
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        if (storagePermission != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (permissionCAMERA != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.CAMERA);
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+
+
+                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MY_PERMISSIONS_REQUEST_CAMERA);
+            ActivityCompat.requestPermissions(this,
+
+
+                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MY_PERMISSIONS_REQUEST_STORAGE);
+            return false;
+        }
+
+        return true;
+    }
 
 	private void createGroups() {
-		Group ip = new Group("Image Processing");
+		/*Group ip = new Group("Image Processing");
 		Group detect = new Group("Detection");
 		Group assoc = new Group("Association");
-		Group tracker = new Group("Tracking");
+		Group tracker = new Group("Tracking");*/
 		Group calib = new Group("Calibration");
 		Group sfm = new Group("Structure From Motion");
-		Group recognition = new Group("Recognition");
+		/*Group recognition = new Group("Recognition"); */
 
-		ip.addChild("Blur",BlurDisplayActivity.class);
+		/*ip.addChild("Blur",BlurDisplayActivity.class);
 		ip.addChild("Gradient",GradientDisplayActivity.class);
 		ip.addChild("Auto Threshold",ThresholdDisplayActivity.class);
 		ip.addChild("Binary Ops",BinaryDisplayActivity.class);
@@ -156,22 +196,23 @@ public class DemoMain extends Activity implements ExpandableListView.OnChildClic
 		recognition.addChild("Square Binary",FiducialSquareBinaryActivity.class);
 		recognition.addChild("Square Image",FiducialSquareImageActivity.class);
 		recognition.addChild("Square Image Library",FiducialImageLibraryAcitivity.class);
-		recognition.addChild("Calib Targets",FiducialCalibrationActivity.class);
+		recognition.addChild("Calib Targets",FiducialCalibrationActivity.class); */
 
 		calib.addChild("Calibrate",CalibrationActivity.class);
-		calib.addChild("Undistort",UndistortDisplayActivity.class);
+		//calib.addChild("Undistort",UndistortDisplayActivity.class);
 
-		sfm.addChild("Stereo",DisparityActivity.class);
-		sfm.addChild("Stabilization",StabilizeDisplayActivity.class);
-		sfm.addChild("Mosaic",MosaicDisplayActivity.class);
+		//sfm.addChild("Stereo",DisparityActivity.class);
+		sfm.addChild("Stereo",CameraActivity.class);
+		/*sfm.addChild("Stabilization",StabilizeDisplayActivity.class);
+		sfm.addChild("Mosaic",MosaicDisplayActivity.class); */
 
 
 
-		groups.add(ip);
+		/*groups.add(ip);
 		groups.add(detect);
 		groups.add(assoc);
 		groups.add(tracker);
-		groups.add(recognition);
+		groups.add(recognition); */
 		groups.add(calib);
 		groups.add(sfm);
 	}
@@ -206,7 +247,7 @@ public class DemoMain extends Activity implements ExpandableListView.OnChildClic
 		}
 	}
 
-	private void loadCameraSpecs() {
+	public void loadCameraSpecs() {
 		int permissionCheck = ContextCompat.checkSelfPermission(this,
 				Manifest.permission.CAMERA);
 
@@ -234,6 +275,36 @@ public class DemoMain extends Activity implements ExpandableListView.OnChildClic
 	}
 
 	@Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+        	case 0:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    //Permission Granted Successfully. Write working code here.
+                } else {
+                    //You did not accept the request can not use the functionality.
+                }
+                break;
+            case MY_PERMISSIONS_REQUEST_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    //Permission Granted Successfully. Write working code here.
+                } else {
+                    //You did not accept the request can not use the functionality.
+                }
+                break;
+            case MY_PERMISSIONS_REQUEST_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    //Permission Granted Successfully. Write working code here.
+                } else {
+                    //You did not accept the request can not use the functionality.
+                }
+                break;
+        }
+    }
+
+/*	@Override
 	public void onRequestPermissionsResult(int requestCode,
 										   String permissions[], int[] grantResults) {
 		switch (requestCode) {
@@ -249,16 +320,16 @@ public class DemoMain extends Activity implements ExpandableListView.OnChildClic
 				return;
 			}
 		}
-	}
+	} */
 
-	private void setDefaultPreferences() {
+	public void setDefaultPreferences() {
 		preference.showFps = false;
 
 		// There are no cameras.  This is possible due to the hardware camera setting being set to false
 		// which was a work around a bad design decision where front facing cameras wouldn't be accepted as hardware
 		// which is an issue on tablets with only front facing cameras
 		if( specs.size() == 0 ) {
-			dialogNoCamera();
+			//dialogNoCamera();
 		}
 		// select a front facing camera as the default
 		for (int i = 0; i < specs.size(); i++) {
@@ -275,7 +346,8 @@ public class DemoMain extends Activity implements ExpandableListView.OnChildClic
 
 		if( !specs.isEmpty() ) {
 			CameraSpecs camera = specs.get(preference.cameraId);
-			preference.preview = UtilVarious.closest(camera.sizePreview, 320, 240);
+			//preference.preview = UtilVarious.closest(camera.sizePreview, 320, 240);
+			preference.preview = UtilVarious.closest(camera.sizePreview, 352, 288);
 			preference.picture = UtilVarious.closest(camera.sizePicture, 640, 480);
 
 			// see if there are any intrinsic parameters to load

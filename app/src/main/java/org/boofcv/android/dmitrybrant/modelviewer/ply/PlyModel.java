@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.boofcv.android.dmitrybrant.modelviewer.util.Util.readIntLe;
+import static javax.microedition.khronos.opengles.GL10.GL_FLOAT;
 
 /*
  *
@@ -42,8 +43,9 @@ import static org.boofcv.android.dmitrybrant.modelviewer.util.Util.readIntLe;
  */
 public class PlyModel extends IndexedModel {
 
-    private final float[] pointColor = new float[] { 1.0f, 1.0f, 1.0f };
-
+    private float[] pointColor = new float[] { 1.0f, 0.0f, 0.0f };
+    private float[] colorfloatArray;
+    List<Float> colorvertices = new ArrayList<>();
     public PlyModel(@NonNull InputStream inputStream) throws IOException {
         super();
         BufferedInputStream stream = new BufferedInputStream(inputStream, INPUT_BUFFER_SIZE);
@@ -51,41 +53,6 @@ public class PlyModel extends IndexedModel {
         if (vertexCount <= 0 || vertexBuffer == null) {
             throw new IOException("Invalid model.");
         }
-    }
-    public PlyModel(@NonNull List<Float> vertices) {
-        super();
-        float[] floatArray = new float[vertices.size()];
-        float x, y, z;
-        int numVertices = vertices.size()/3;
-
-        double centerMassX = 0.0;
-        double centerMassY = 0.0;
-        double centerMassZ = 0.0;
-
-        for (int i = 0; i < vertices.size(); i++) {
-            int temp = i;
-            floatArray[temp] = vertices.get(temp); //get x
-            x = floatArray[temp];
-            ++temp;
-            floatArray[temp] = vertices.get(temp); //get y
-            y = floatArray[temp];
-            ++temp;
-            floatArray[temp] = vertices.get(temp); //getz
-            z = floatArray[temp];
-            adjustMaxMin(x, y, z);
-            centerMassX += x;
-            centerMassY += y;
-            centerMassZ += z;
-            i = temp; //update value of i
-        }
-        this.centerMassX = (float)(centerMassX / numVertices);
-        this.centerMassY = (float)(centerMassY / numVertices);
-        this.centerMassZ = (float)(centerMassZ / numVertices);
-        ByteBuffer vbb = ByteBuffer.allocateDirect(floatArray.length * BYTES_PER_FLOAT);
-        vbb.order(ByteOrder.nativeOrder());
-        vertexBuffer = vbb.asFloatBuffer();
-        vertexBuffer.put(floatArray);
-        vertexBuffer.position(0);
     }
 
     @Override
@@ -153,16 +120,31 @@ public class PlyModel extends IndexedModel {
         for (int i = 0; i < vertices.size(); i++) {
             floatArray[i] = vertices.get(i);
         }
+        //float[] i
+        //pointColor = new float[colorvertices.size()];
+        colorfloatArray = new float[colorvertices.size()];
+        for (int i = 0; i < colorvertices.size(); i++) {
+            colorfloatArray[i] = colorvertices.get(i);
+            //pointColor[i] = colorvertices.get(i);
+        }
         ByteBuffer vbb = ByteBuffer.allocateDirect(floatArray.length * BYTES_PER_FLOAT);
         vbb.order(ByteOrder.nativeOrder());
+
+        ByteBuffer cvbb = ByteBuffer.allocateDirect(colorfloatArray.length * BYTES_PER_FLOAT);
+        cvbb.order(ByteOrder.nativeOrder());
+
         vertexBuffer = vbb.asFloatBuffer();
         vertexBuffer.put(floatArray);
         vertexBuffer.position(0);
+
+        normalBuffer = cvbb.asFloatBuffer();
+        normalBuffer.put(colorfloatArray);
+        normalBuffer.position(0);
     }
 
     private void readVerticesText(List<Float> vertices, BufferedReader reader) throws IOException {
         String[] lineArr;
-        float x, y, z;
+        float x, y, z, r,g,b,a;
 
         double centerMassX = 0.0;
         double centerMassY = 0.0;
@@ -173,9 +155,21 @@ public class PlyModel extends IndexedModel {
             x = Float.parseFloat(lineArr[0]);
             y = Float.parseFloat(lineArr[1]);
             z = Float.parseFloat(lineArr[2]);
+            r = Float.parseFloat(lineArr[3])/255;
+            g = Float.parseFloat(lineArr[4])/255;
+            b = Float.parseFloat(lineArr[5])/255;
+            a = (float) 0.5; //Float.parseFloat(lineArr[6])/255;
+
+
             vertices.add(x);
             vertices.add(y);
-            vertices.add(z);
+            vertices.add(z); //appending data into array
+
+            colorvertices.add(r);
+            colorvertices.add(g);
+            colorvertices.add(b);
+            //colorvertices.add(a);
+
 
             adjustMaxMin(x, y, z);
             centerMassX += x;
@@ -232,19 +226,32 @@ public class PlyModel extends IndexedModel {
 
         int mvpMatrixHandle = GLES20.glGetUniformLocation(glProgram, "u_MVP");
         int positionHandle = GLES20.glGetAttribLocation(glProgram, "a_Position");
+        int normalHandle = GLES20.glGetAttribLocation(glProgram, "a_Normal");
         int pointThicknessHandle = GLES20.glGetUniformLocation(glProgram, "u_PointThickness");
         int ambientColorHandle = GLES20.glGetUniformLocation(glProgram, "u_ambientColor");
+        int u_PointColor = GLES20.glGetAttribLocation(glProgram, "u_PointColor");
 
         GLES20.glEnableVertexAttribArray(positionHandle);
         GLES20.glVertexAttribPointer(positionHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false,
                 VERTEX_STRIDE, vertexBuffer);
+
+        GLES20.glEnableVertexAttribArray(u_PointColor);
+        GLES20.glVertexAttribPointer(u_PointColor, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false,
+                VERTEX_STRIDE, normalBuffer);
+
+        //GLES20.glEnableVertexAttribArray(ambientColorHandle);
+        //GLES20.glVertexAttribPointer(ambientColorHandle, 4, GLES20.GL_FLOAT, false, VERTEX_STRIDE, vertexBuffer);
 
         Matrix.multiplyMM(mvMatrix, 0, viewMatrix, 0, modelMatrix, 0);
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvMatrix, 0);
         GLES20.glUniformMatrix4fv(mvpMatrixHandle, 1, false, mvpMatrix, 0);
 
         GLES20.glUniform1f(pointThicknessHandle, 3.0f);
-        GLES20.glUniform3fv(ambientColorHandle, 1, pointColor, 0);
+        //pointColor = colorfloatArray;
+
+        //GLES20.glUniform3fv(ambientColorHandle, colorfloatArray.length/3, colorfloatArray, 0); // have to check Uniform3f sheet.
+        //GLES20.glUniform3fv(ambientColorHandle, 1, pointColor, 0); // have to check Uniform3f sheet.
+        //GLES20.glVertexAttrib3fv(ambientColorHandle, normalBuffer);
 
         GLES20.glDrawArrays(GLES20.GL_POINTS, 0, vertexCount);
 

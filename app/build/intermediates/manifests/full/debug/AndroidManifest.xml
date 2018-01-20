@@ -5,7 +5,7 @@
     android:versionName="1.8.1" >
 
     <uses-sdk
-        android:minSdkVersion="13"
+        android:minSdkVersion="21"
         android:targetSdkVersion="25" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -19,6 +19,9 @@
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
+    <!--  -->
+    <!-- <uses-feature android:name="android.hardware.camera" /> -->
+    <!-- <uses-feature android:name="android.hardware.camera.autofocus" /> -->
 
     <supports-screens
         android:anyDensity="true"
@@ -34,9 +37,13 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:testOnly="true" >
+
+        <!-- android:name=".DemoMain" -->
         <activity
             android:name="org.boofcv.android.DemoMain"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,6 +54,10 @@
             android:name="org.boofcv.android.dmitrybrant.modelviewer.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name="org.boofcv.android.camera2basic.CameraActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name="org.boofcv.android.DemoVideoDisplayActivity"
             android:screenOrientation="landscape" />

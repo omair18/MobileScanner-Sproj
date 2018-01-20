@@ -316,12 +316,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void loadSampleModel(List<Float> vertices) {
         try {
-            /*InputStream stream = getApplicationContext().getAssets()
-                    .open(SAMPLE_MODELS[sampleModelIndex++ % SAMPLE_MODELS.length]); */
-            InputStream stream = getApplicationContext().getAssets().open("chair.ply");
-            //setCurrentModel(new StlModel(stream));
+            InputStream stream = getApplicationContext().getAssets()
+                    .open(SAMPLE_MODELS[sampleModelIndex++ % SAMPLE_MODELS.length]);
+            /*InputStream stream = getApplicationContext().getAssets().open("chair.ply");*/
+            setCurrentModel(new StlModel(stream));
 
-            setCurrentModel(new PlyModel(vertices));
+            //setCurrentModel(new PlyModel(vertices));
             stream.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -106,8 +106,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.android.support:multidex-1.0.2" level="project" />
-    <orderEntry type="library" scope="TEST" name="com.android.support:multidex-1.0.1" level="project" />
+    <orderEntry type="library" name="com.android.support:multidex-1.0.1" level="project" />
     <orderEntry type="library" name="org.deepboof:io:0.3@jar" level="project" />
     <orderEntry type="library" name="org.deepboof:main:0.3@jar" level="project" />
     <orderEntry type="library" name="org.ddogleg:ddogleg:0.10@jar" level="project" />
@@ -142,7 +141,6 @@
     <orderEntry type="library" name="org.boofcv:sfm:0.26@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-25.1.0" level="project" />
     <orderEntry type="library" name="xpp3:xpp3_min:1.1.4c@jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="com.android.support:multidex-instrumentation-1.0.2" level="project" />
     <orderEntry type="library" name="org.deepboof:models:0.3@jar" level="project" />
     <orderEntry type="library" name="org.ejml:simple:0.30@jar" level="project" />
     <orderEntry type="library" name="org.ejml:dense64:0.30@jar" level="project" />

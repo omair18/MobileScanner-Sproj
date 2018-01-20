@@ -1,1 +1,1 @@
-[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":12},"path":"app-debug.apk","properties":{"packageId":"org.boofcv.android","split":"","minSdkVersion":"13"}}]
+[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":12},"path":"app-debug.apk","properties":{"packageId":"org.boofcv.android","split":"","minSdkVersion":"21"}}]
